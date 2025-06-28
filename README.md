@@ -52,20 +52,6 @@ The site uses **React**, **Tailwind CSS**, and **Vite**, along with **GSAP** for
 
 ---
 
-## 📌 Table of Contents
-
-- [Live Demo](#-live-demo)
-- [Installation](#-installation)
-- [Project Structure](#-project-structure)
-- [Built With](#-built-with)
-- [Deployment](#-deployment)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Contact](#-contact)
-
-
----
-
 ## 📥 Installation
 
 1️⃣ **Clone the repository**
