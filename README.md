@@ -1,79 +1,59 @@
-# ⛳ Jim Fazio Golf Website
+# Jim Fazio Golf ⛳
 
-Welcome to the official website project for **Jim Fazio Golf**, a modern, visually captivating online presence created to showcase the work and philosophy of acclaimed golf course architect Jim Fazio.
+A marketing site for **Jim Fazio Golf**, showcasing the work and philosophy of golf course architect Jim Fazio — 50+ courses designed across six countries, including Top 100–ranked venues.
 
-This project brings together the beauty of golf course design with immersive web technologies, offering visitors a rich experience exploring stunning visuals, in-depth design philosophy, and a portfolio of world-class golf courses. The site was built to create an immersive experience for the user, aimed at highliting Jim Fazio Golf's integration of timeless design and modern technology. 
+## 🔗 Live Demo
 
-Throughout the site, animations and displays such as interactive 3D-models (using **Three.js**) and slideshows are on full display.
+**[zacarywebb.github.io/JimFazioGolf](https://zacarywebb.github.io/JimFazioGolf/)**
 
----
+> The contact form is in demo mode on the static deployment — submissions are simulated.
 
-![Hero Screenshot](public/images/hero_screenshot.png)
+## ✨ Highlights
 
----
+- **Interactive 3D hero** — a drag-to-explore golf course model rendered with Three.js / React Three Fiber, with custom lighting and auto-rotation
+- **Luxury design system** — Playfair Display + Inter type pairing and a deep-green / brass / cream palette built as Tailwind CSS v4 theme tokens
+- **GSAP motion** — staggered hero entrance timeline and a reusable `useReveal` hook driving ScrollTrigger-based reveals across every page
+- **Editorial layouts** — full-bleed page heroes, a numbered design-process timeline, offset portfolio grids, and an auto-playing crossfade gallery with keyboard navigation
+- **Responsive throughout** — fluid layouts from mobile to widescreen, with an animated full-screen mobile menu
+- **Performance-minded** — code-split vendor/Three.js chunks, lazy-loaded imagery, and `prefers-reduced-motion` support
 
-## 🌟 Project Overview
+## 🛠 Tech Stack
 
-Jim Fazio’s legacy in golf course architecture spans decades and continents. This website was designed to:
+| | |
+|---|---|
+| Framework | React 19 + Vite 6 |
+| Styling | Tailwind CSS 4 |
+| Animation | GSAP 3 (ScrollTrigger, @gsap/react) |
+| 3D | Three.js, React Three Fiber, drei |
+| Routing | React Router 7 |
+| Deployment | GitHub Pages (SPA fallback via 404 redirect) |
 
-- Highlight Jim Fazio’s unique approach to course shaping, integrating modern technology with timeless design.
-- Present high-quality images of his projects with a dynamic, responsive layout.
-- Provide a platform for potential clients and enthusiasts to connect and learn more about his work.
-- Engage each user, inviting them to interact with and immerse themselves in the site.
+## 📄 Pages
 
-The site uses **React**, **Tailwind CSS**, and **Vite**, along with **GSAP** for engaging animations and **Three.js** for immersive, interactive 3D models.
+- **Home** — 3D hero with stats, club-logo marquee, signature course gallery, philosophy, services, and CTA
+- **About** — portfolio slideshow, notable projects, full services showcase with drone/3D-render videos, and team bios
+- **Design** — design philosophy and the four-phase design process timeline
+- **Contact** — split contact layout with a validated form
 
----
+## 🚀 Running Locally
 
-## ✨ Features
-
-✅ **Dynamic Hero Section** — A powerful, visually striking landing experience to capture attention immediately, implemented with an interactive 3D model and numerous animations.  
-✅ **Responsive Design** — Layouts adapt fluidly to desktop, tablet, and mobile devices.  
-✅ **Animated Elements** — Smooth scroll animations enhance the user experience.  
-✅ **Photo Galleries** — Interactive slideshows display Jim Fazio’s most impressive golf course projects.  
-✅ **Multi-Page Architecture** — Includes sections for design philosophy, featured courses, and contact details.  
-✅ **SEO-Ready Structure** — Built with performance and discoverability in mind.
-
----
-
-## 🖼️ Images from the Site
-
-### 🔹 Hero Section
-![Hero](public/images/hero_ss.png)
-
-### 🔹 About Layout
-![Homepage](public/images/services_screenshot.png)
-
-### 🔹 Design Process Section
-![Design Process](public/images/design_screenshot.png)
-
-### 🔹 Contact Section
-![Contact](public/images/contact_ss.png)
-
----
-
-## 📥 Installation
-
-1️⃣ **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/JimFazioGolf.git
+git clone https://github.com/zacarywebb/JimFazioGolf.git
 cd JimFazioGolf
-
-```
-
-2️⃣ **Install dependencies**
-```bash
 npm install
-
-```
-3️⃣ **Run Development Server**
-```bash
 npm run dev
-
 ```
 
-## 📝 Note
-The site is still being reviewed and developed by myself and Mr. Fazio's team and has not yet been deployed.
+The dev server serves the site at `http://localhost:5173/JimFazioGolf/` (the base path matches the GitHub Pages deployment).
 
+## 📁 Structure
 
-
+```
+src/
+├── components/     # NavBar, Footer, Button, PageHero, Slideshow, 3D models...
+├── sections/       # Hero, FeaturedCourses, Philosophy, DesignProcess...
+├── pages/          # Home, About, Design, Contact, ThankYou
+├── constants/      # Site content and data
+├── hooks/          # useReveal (GSAP ScrollTrigger)
+└── lib/            # asset() base-path helper
+```

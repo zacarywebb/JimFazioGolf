@@ -1,167 +1,131 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import PageHero from "../components/PageHero.jsx";
+import useReveal from "../hooks/useReveal.js";
 
-gsap.registerPlugin(ScrollTrigger);
+const inputClass =
+    "w-full border border-cream-50/15 bg-night-800/60 px-4 py-3.5 text-sm text-cream-50 placeholder-sage-500 transition-colors duration-300 focus:border-brass-400 focus:outline-none";
 
 const Contact = () => {
-    const sectionRef = useRef(null);
+    const scope = useReveal();
+    const navigate = useNavigate();
+    const [form, setForm] = useState({ name: "", email: "", message: "" });
+    const [sending, setSending] = useState(false);
 
-    useEffect(() => {
-        let ctx;
+    const update = (field) => (e) => setForm({ ...form, [field]: e.target.value });
 
-        const runAnimations = () => {
-            ctx = gsap.context(() => {
-                gsap.utils.toArray('.fade-in').forEach((el) => {
-                    gsap.fromTo(
-                        el,
-                        { opacity: 0, y: 70 },
-                        {
-                            opacity: 1,
-                            y: 0,
-                            duration: 1,
-                            ease: 'power2.out',
-                            scrollTrigger: {
-                                trigger: el,
-                                start: 'top 99%',
-                                toggleActions: 'play none none none',
-                            },
-                        }
-                    );
-                });
-            }, sectionRef);
-        };
-
-        const waitForScroll = () => {
-            if (window.scrollY === 0) {
-                runAnimations();
-            } else {
-                setTimeout(waitForScroll, 10);
-            }
-        };
-
-        waitForScroll();
-
-        return () => ctx?.revert();
-    }, []);
-
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [message, setMessage] = useState('');
-
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
-
-        try {
-            const res = await fetch('/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name, email, message }),
-            });
-
-            const data = await res.json();
-            if (res.ok) {
-                alert('Message sent successfully!');
-            } else {
-                alert('Error: ' + data.message);
-            }
-        } catch (error) {
-            console.error('Error submitting contact form:', error);
-            alert('Something went wrong. Please try again.');
-        }
+        setSending(true);
+        // Demo deployment is static — simulate a successful send.
+        setTimeout(() => navigate("/thank-you"), 600);
     };
 
-
     return (
-        <section ref={sectionRef} className="text-white mt-0 overflow-hidden">
-            {/* Hero Section */}
-            <section className="relative w-full h-[78vh]">
-                <img
-                    src="/images/Slideshow/WestchesterOverview.jpg"
-                    alt="Contact Hero"
-                    className="w-full h-full object-cover opacity-60 pt-10"
-                />
-                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-[90%] max-w-4xl px-6">
-                    <div className="card-border bg-black-100/70 rounded-xl p-8 shadow-lg">
-                        <h1 className="text-4xl uppercase md:text-5xl font-extrabold text-white-50 text-center fade-in">
-                            Contact Us
-                        </h1>
-                    </div>
-                </div>
-            </section>
+        <main ref={scope}>
+            <PageHero
+                image="images/Slideshow/WestchesterOverview.jpg"
+                eyebrow="Contact"
+                title="Let's talk about your land"
+                subtitle="Whether you're exploring a collaboration or seeking more information about our courses and services — we'd love to connect."
+            />
 
-            {/* Contact Form Section */}
-            <section className="bg-black-200 text-white px-6 md:px-16 py-20 fade-in min-h-screen">
-                <div className="max-w-3xl mx-auto text-center fade-in">
-                    <h2 className="text-4xl text-white-50 font-extrabold uppercase tracking-wider mb-4">
-                        Get in touch with our team
-                    </h2>
-                    <p className="text-white/80 text-lg mb-4">
-                        We’d love to connect—whether you’re exploring a potential collaboration or seeking more information about our courses and services.
-                    </p>
-                    <p className="text-white/70 text-md">
-                        Or email us directly at <a href="mailto:CONTACT@JIMFAZIOGOLF.COM" className="hover:text-white">CONTACT@JIMFAZIOGOLF.COM</a>
-                    </p>
-                </div>
+            <section className="section">
+                <div className="container-site grid gap-14 lg:grid-cols-[1fr_1.2fr]">
+                    {/* Info column */}
+                    <div className="flex flex-col gap-10" data-reveal>
+                        <div>
+                            <p className="eyebrow mb-4">Get in Touch</p>
+                            <h2 className="display-md">
+                                Every great course starts with a conversation
+                            </h2>
+                        </div>
 
-
-
-                <form
-                    className="max-w-2xl mx-auto bg-white/5 border border-white/10 rounded-xl p-8 space-y-6 fade-in"
-                    onSubmit={onSubmit}
-                >
-
-                    <div className="flex flex-col fade-in">
-                        <label htmlFor="name" className="text-white/80 mb-2">Name</label>
-                        <input
-                            value = {name}
-                            onChange={e => setName(e.target.value)}
-                            type="text"
-                            required
-                            className="rounded-md p-3 bg-black border border-white/20 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white"
-                            placeholder="Name"
-                        />
-                    </div>
-
-                    <div className="flex flex-col fade-in">
-                        <label htmlFor="email" className="text-white/80 mb-2">Email</label>
-                        <input
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                            type="email"
-                            required
-                            className="rounded-md p-3 bg-black border border-white/20 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white"
-                            placeholder="you@example.com"
-                        />
+                        <div className="flex flex-col gap-6">
+                            <div className="hairline pt-6">
+                                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-sage-500">
+                                    Email
+                                </p>
+                                <a
+                                    href="mailto:contact@jimfaziogolf.com"
+                                    className="mt-2 inline-block font-display text-xl text-cream-50 transition-colors hover:text-brass-300"
+                                >
+                                    contact@jimfaziogolf.com
+                                </a>
+                            </div>
+                            <div className="hairline pt-6">
+                                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-sage-500">
+                                    Based In
+                                </p>
+                                <p className="mt-2 font-display text-xl text-cream-50">
+                                    Palm Beach, Florida
+                                </p>
+                            </div>
+                            <div className="hairline pt-6">
+                                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-sage-500">
+                                    Working Worldwide
+                                </p>
+                                <p className="mt-2 text-sm leading-relaxed text-sage-300">
+                                    United States · Italy · Japan · South Korea · Bahamas ·
+                                    The Grenadines
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="flex flex-col fade-in">
-                        <label htmlFor="message" className="text-white/80 mb-2">Message</label>
-                        <textarea
-                            value={message}
-                            onChange={e => setMessage(e.target.value)}
-                            rows="5"
-                            required
-                            className="rounded-md p-3 bg-black border border-white/20 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white"
-                            placeholder="Write your message here..."
-                        />
-                    </div>
-
-                    <div>
-                        <button
-                            type="submit"
-                            className="w-full py-4 bg-white-50 text-black font-semibold rounded-md flex justify-center items-center gap-2 hover:bg-gray-200 transition"
-                        >
-                            Send Message
+                    {/* Form column */}
+                    <form onSubmit={onSubmit} className="card-lux flex flex-col gap-6 p-8 md:p-10" data-reveal>
+                        <div className="grid gap-6 sm:grid-cols-2">
+                            <div>
+                                <label htmlFor="name" className="mb-2 block text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-sage-400">
+                                    Name
+                                </label>
+                                <input
+                                    id="name"
+                                    type="text"
+                                    required
+                                    value={form.name}
+                                    onChange={update("name")}
+                                    placeholder="Your name"
+                                    className={inputClass}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="email" className="mb-2 block text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-sage-400">
+                                    Email
+                                </label>
+                                <input
+                                    id="email"
+                                    type="email"
+                                    required
+                                    value={form.email}
+                                    onChange={update("email")}
+                                    placeholder="you@example.com"
+                                    className={inputClass}
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <label htmlFor="message" className="mb-2 block text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-sage-400">
+                                Message
+                            </label>
+                            <textarea
+                                id="message"
+                                rows="6"
+                                required
+                                value={form.message}
+                                onChange={update("message")}
+                                placeholder="Tell us about your project..."
+                                className={`${inputClass} resize-none`}
+                            />
+                        </div>
+                        <button type="submit" disabled={sending} className="btn-primary disabled:opacity-60">
+                            {sending ? "Sending..." : "Send Message"}
                         </button>
-                    </div>
-                </form>
-
-
+                    </form>
+                </div>
             </section>
-        </section>
+        </main>
     );
 };
 

@@ -1,21 +1,20 @@
-// src/pages/ThankYou.jsx
-import React from 'react';
-import { Link } from 'react-router-dom';
+import Button from "../components/Button.jsx";
 
 const ThankYou = () => {
     return (
-        <section className="min-h-screen bg-black-200 text-white flex flex-col justify-center items-center text-center px-6 fade-in">
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-6 text-white-50">Thank You!</h1>
-            <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl">
-                Your message has been sent successfully. We appreciate your interest and will be in touch shortly.
+        <main className="flex min-h-screen flex-col items-center justify-center gap-7 px-6 text-center">
+            <p className="eyebrow justify-center after:h-px after:w-10 after:bg-brass-500 after:content-['']">
+                Message Received
             </p>
-            <Link
-                to="/"
-                className="bg-white text-black font-semibold py-3 px-6 rounded-md hover:bg-gray-200 transition"
-            >
-                Back to Home
-            </Link>
-        </section>
+            <h1 className="display-lg max-w-2xl">
+                Thank you — we'll be in touch <em className="text-brass-300">shortly</em>
+            </h1>
+            <p className="lede max-w-xl text-sage-400">
+                Your message has been sent successfully. We appreciate your interest
+                in Jim Fazio Golf.
+            </p>
+            <Button text="Back to Home" to="/" variant="outline" className="mt-2" />
+        </main>
     );
 };
 
